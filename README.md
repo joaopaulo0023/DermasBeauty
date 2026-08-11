@@ -53,3 +53,4 @@ python manage.py runserver
 - O projeto usa SQLite e Django ORM.
 - As configurações podem ser ajustadas em `.env`.
 - Imagens e arquivos de mídia ficam em `media/` durante o desenvolvimento.
+"# DermasBeauty" 
