@@ -1,0 +1,89 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Dermas Beauty - Estética & bem-estar em Taubaté/SP. Sobrancelhas, cuidados faciais, massagens e procedimentos estéticos personalizados." />
+    <meta property="og:title" content="Dermas Beauty | Estética & bem-estar em Taubaté" />
+    <meta property="og:description" content="Dermas Beauty - Estética & bem-estar em Taubaté/SP. Sobrancelhas, cuidados faciais, massagens e procedimentos estéticos personalizados." />
+    <meta property="og:type" content="website" />
+    <meta name="robots" content="index, follow" />
+    <title>{% block title %}Dermas Beauty | Estética & bem-estar em Taubaté{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="{% static 'core/css/style.css' %}" />
+    <link rel="shortcut icon" href="{% static 'core/img/logo.svg' %}" type="image/svg+xml" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container nav-wrap">
+        <a href="{% url 'core:home' %}" class="brand" aria-label="Dermas Beauty home">
+          <span class="brand-mark">DB</span>
+          <span class="brand-text">
+            <strong>{{ CLINIC_NAME }}</strong>
+            <small>Estética &amp; Bem-estar</small>
+          </span>
+        </a>
+
+        <nav class="main-nav" aria-label="Navegação principal">
+          <a href="{% url 'core:home' %}">Início</a>
+          <a href="{% url 'core:about' %}">Sobre</a>
+          <a href="{% url 'core:services' %}">Serviços</a>
+          <a href="{% url 'core:gallery' %}">Galeria</a>
+          <a href="{% url 'core:contact' %}">Contato</a>
+          <a href="{% url 'core:appointment' %}" class="button button-primary nav-cta">AGENDAR</a>
+        </nav>
+
+        <button class="menu-toggle" aria-label="Abrir menu" aria-expanded="false">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </header>
+
+    <main>
+      {% block content %}{% endblock %}
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-grid">
+        <div>
+          <h3>{{ CLINIC_NAME }}</h3>
+          <p>Estética &amp; Bem-estar</p>
+          <p>{{ CITY }}</p>
+        </div>
+        <div>
+          <h4>Links rápidos</h4>
+          <ul>
+            <li><a href="{% url 'core:home' %}">Início</a></li>
+            <li><a href="{% url 'core:about' %}">Sobre</a></li>
+            <li><a href="{% url 'core:services' %}">Serviços</a></li>
+            <li><a href="{% url 'core:gallery' %}">Galeria</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Contato</h4>
+          <ul>
+            <li><a href="{{ WHATSAPP_LINK }}" target="_blank" rel="noopener noreferrer">WhatsApp</a></li>
+            <li><a href="{{ INSTAGRAM_URL }}" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+            <li><a href="mailto:{{ EMAIL }}">{{ EMAIL }}</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="container">
+          <p>© {% now 'Y' %} {{ CLINIC_NAME }}. Todos os direitos reservados.</p>
+        </div>
+      </div>
+    </footer>
+
+    <a class="floating-whatsapp" href="{{ WHATSAPP_LINK }}" target="_blank" rel="noopener noreferrer" aria-label="Falar no WhatsApp">
+      WhatsApp
+    </a>
+
+    <script src="{% static 'core/js/main.js' %}"></script>
+  </body>
+</html>

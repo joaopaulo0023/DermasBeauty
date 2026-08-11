@@ -1,0 +1,51 @@
+{% extends 'core/base.html' %}
+{% block title %}Serviços | Dermas Beauty{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+  <div class="container page-hero-inner">
+    <div>
+      <p class="eyebrow">Serviços</p>
+      <h1>Tratamentos para realçar sua beleza.</h1>
+    </div>
+    <div class="breadcrumbs">Início / Serviços</div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="grid-3">
+      {% for service in services %}
+      <article class="service-card reveal">
+        {% if service.video %}
+        <div class="service-video">
+          <video class="service-card-image" autoplay muted loop playsinline preload="metadata"{% if service.image %} poster="{{ service.image.url }}"{% endif %}>
+            <source src="{{ service.video.url }}" type="video/mp4" />
+          </video>
+          <button class="video-sound-toggle" type="button" aria-pressed="false">Ativar som</button>
+        </div>
+        {% elif service.image %}
+        <img class="service-card-image" src="{{ service.image.url }}" alt="{{ service.name }}" />
+        {% else %}
+        <div class="service-card-image"></div>
+        {% endif %}
+        <div class="service-card-body">
+          <div class="service-meta">
+            <span class="badge">{{ service.category }}</span>
+            <span>{{ service.duration }}</span>
+          </div>
+          <h3>{{ service.name }}</h3>
+          <p>{{ service.description }}</p>
+          <div class="card-actions">
+            <a href="{% url 'core:service_detail' service.slug %}" class="button button-secondary">Detalhes</a>
+            <a href="{% url 'core:appointment' %}" class="button button-primary">Agendar</a>
+          </div>
+        </div>
+      </article>
+      {% empty %}
+      <p>Em breve novos serviços.</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

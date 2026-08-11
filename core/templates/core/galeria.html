@@ -1,0 +1,33 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %}Galeria | Dermas Beauty{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+  <div class="container page-hero-inner">
+    <div>
+      <p class="eyebrow">Galeria</p>
+      <h1>Momentos de beleza e bem-estar.</h1>
+    </div>
+    <div class="breadcrumbs">Início / Galeria</div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="gallery-grid">
+      {% for image in images %}
+      <figure class="gallery-item reveal">
+        {% if image.image %}
+        <img src="{{ image.image.url }}" alt="Foto da galeria Dermas Beauty" />
+        {% else %}
+        <img src="{% static 'core/img/galeria/placeholder.svg' %}" alt="Foto da galeria Dermas Beauty" />
+        {% endif %}
+      </figure>
+      {% empty %}
+      <p>Galeria em breve.</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

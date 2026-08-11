@@ -1,0 +1,40 @@
+{% extends 'core/base.html' %}
+{% block title %}Contato | Dermas Beauty{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+  <div class="container page-hero-inner">
+    <div>
+      <p class="eyebrow">Contato</p>
+      <h1>Fale com a Dermas Beauty.</h1>
+    </div>
+    <div class="breadcrumbs">Início / Contato</div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container contact-grid">
+    <div>
+      <h2 class="section-title">Dermas Beauty</h2>
+      <p class="lead">Estética &amp; bem-estar</p>
+      <p>{{ ADDRESS }}</p>
+      <p>Atendimento com hora marcada</p>
+      <ul class="contact-list">
+        <li><span class="icon">W</span><span><a href="{{ WHATSAPP_LINK }}" target="_blank" rel="noopener noreferrer">WhatsApp</a></span></li>
+        <li><span class="icon">◎</span><span><a href="{{ INSTAGRAM_URL }}" target="_blank" rel="noopener noreferrer">{{ INSTAGRAM }}</a></span></li>
+        <li><span class="icon">✉</span><span><a href="mailto:{{ EMAIL }}">{{ EMAIL }}</a></span></li>
+        <li><span class="icon">⏰</span><span>{{ BUSINESS_HOURS }}</span></li>
+      </ul>
+    </div>
+    <div class="contact-photo reveal"></div>
+  </div>
+</section>
+
+<section class="section" style="background: rgba(255,255,255,0.45);">
+  <div class="container">
+    <div class="map-box reveal">
+      <iframe src="{{ GOOGLE_MAPS_URL }}" width="100%" height="100%" style="border:0;" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Mapa de localização"></iframe>
+    </div>
+  </div>
+</section>
+{% endblock %}

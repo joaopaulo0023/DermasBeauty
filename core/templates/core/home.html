@@ -1,0 +1,189 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %}Dermas Beauty | Estética & bem-estar em Taubaté{% endblock %}
+
+{% block content %}
+<section class="hero">
+  <div class="container hero-inner">
+    <div>
+      <p class="eyebrow">{{ homepage.hero_eyebrow }}</p>
+      <h1>{{ homepage.hero_title|linebreaksbr }}</h1>
+      <p class="lead">{{ homepage.hero_description }}</p>
+      <div class="hero-actions">
+        <a href="{% url 'core:appointment' %}" class="button button-primary">AGENDAR HORÁRIO</a>
+        <a href="{% url 'core:services' %}" class="button button-secondary">CONHEÇA NOSSOS SERVIÇOS</a>
+      </div>
+    </div>
+
+    <div class="hero-visual reveal{% if homepage.hero_image %} has-image{% endif %}">
+      {% if homepage.hero_image %}
+      <img class="hero-visual-image" src="{{ homepage.hero_image.url }}" alt="{{ homepage.experience_title }}" />
+      {% endif %}
+      <div class="hero-badge">
+        <strong>{{ homepage.experience_title }}</strong>
+        <p>{{ homepage.experience_text }}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="container highlights">
+    <div class="highlight-item reveal">
+      <strong>10+</strong>
+      <span>Anos de experiência</span>
+    </div>
+    <div class="highlight-item reveal">
+      <strong>Agendamento</strong>
+      <span>Com hora marcada</span>
+    </div>
+    <div class="highlight-item reveal">
+      <strong>Taubaté</strong>
+      <span>Atendimento local</span>
+    </div>
+    <div class="highlight-item reveal">
+      <strong>Premium</strong>
+      <span>Atendimento personalizado</span>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container about-grid">
+    <div class="about-photo reveal{% if homepage.about_image %} has-image{% endif %}"{% if homepage.about_image %} style="background-image: url('{{ homepage.about_image.url }}');"{% endif %}></div>
+    <div>
+      <p class="eyebrow">{{ homepage.about_eyebrow }}</p>
+      <h2 class="section-title">{{ homepage.about_title }}</h2>
+      <p class="lead">{{ homepage.about_description }}</p>
+      <div class="feature-list">
+        <div class="feature-item reveal">
+          <span class="bullet"></span>
+          <span>10 anos de experiência em estética e bem-estar.</span>
+        </div>
+        <div class="feature-item reveal">
+          <span class="bullet"></span>
+          <span>Atendimento exclusivo e com atenção individualizada.</span>
+        </div>
+        <div class="feature-item reveal">
+          <span class="bullet"></span>
+          <span>Localizada em Taubaté/SP, com foco em conforto e resultados naturais.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="background: rgba(255,255,255,0.45);">
+  <div class="container">
+    <div class="section-header">
+      <p class="eyebrow">Nossos serviços</p>
+      <h2 class="section-title">Tratamentos pensados para realçar você.</h2>
+    </div>
+    <div class="grid-3">
+      {% for service in services %}
+      <article class="service-card reveal">
+        {% if service.video %}
+        <div class="service-video">
+          <video class="service-card-image" autoplay muted loop playsinline preload="metadata"{% if service.image %} poster="{{ service.image.url }}"{% endif %}>
+            <source src="{{ service.video.url }}" type="video/mp4" />
+          </video>
+          <button class="video-sound-toggle" type="button" aria-pressed="false">Ativar som</button>
+        </div>
+        {% elif service.image %}
+        <img class="service-card-image" src="{{ service.image.url }}" alt="{{ service.name }}" />
+        {% else %}
+        <div class="service-card-image"></div>
+        {% endif %}
+        <div class="service-card-body">
+          <div class="service-meta">
+            <span class="badge">{{ service.category }}</span>
+            <span>{{ service.duration }}</span>
+          </div>
+          <h3>{{ service.name }}</h3>
+          <p>{{ service.description|truncatechars:120 }}</p>
+          <div class="card-actions">
+            <a href="{% url 'core:service_detail' service.slug %}" class="button button-secondary">Saiba mais</a>
+            <a href="{% url 'core:appointment' %}" class="button button-primary">Agendar</a>
+          </div>
+        </div>
+      </article>
+      {% empty %}
+      <p>Em breve novos serviços serão publicados.</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <p class="eyebrow">{{ homepage.eyebrow_services_eyebrow }}</p>
+      <h2 class="section-title">{{ homepage.eyebrow_services_title }}</h2>
+    </div>
+    <div class="grid-3">
+      {% for eyebrow_service in eyebrow_services %}
+      <article class="service-card reveal">
+        {% if eyebrow_service.image or eyebrow_service.images.all %}
+        <div class="eyebrow-image-rotator">
+          {% if eyebrow_service.image %}
+          <img class="service-card-image is-active" src="{{ eyebrow_service.image.url }}" alt="{{ eyebrow_service.title }}" />
+          {% endif %}
+          {% for service_image in eyebrow_service.images.all %}
+          <img class="service-card-image{% if not eyebrow_service.image and forloop.first %} is-active{% endif %}" src="{{ service_image.image.url }}" alt="{{ eyebrow_service.title }}" />
+          {% endfor %}
+        </div>
+        {% else %}
+        <div class="service-card-image"></div>
+        {% endif %}
+        <div class="service-card-body">
+          <h3>{{ eyebrow_service.title }}</h3>
+          <p>{{ eyebrow_service.description }}</p>
+        </div>
+      </article>
+      {% empty %}
+      <p>Em breve novos serviços de sobrancelhas.</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section" style="background: rgba(255,255,255,0.45);">
+  <div class="container">
+    <div class="section-header">
+      <p class="eyebrow">Depoimentos</p>
+      <h2 class="section-title">O que nossas clientes dizem</h2>
+    </div>
+    <div class="grid-3">
+      {% for testimonial in testimonials %}
+      <article class="testimonial-card reveal">
+        <div class="stars">★★★★★</div>
+        <p>“{{ testimonial.text }}”</p>
+        <strong>{{ testimonial.client_name }}</strong>
+      </article>
+      {% empty %}
+      <p>Depoimentos em breve.</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <p class="eyebrow">Instagram</p>
+      <h2 class="section-title">@dermasbeauty</h2>
+      <p class="lead">Acompanhe nosso trabalho e fique por dentro das novidades.</p>
+    </div>
+    <div class="gallery-grid">
+      {% for image in gallery_images %}
+      <div class="gallery-item"><img src="{{ image.image.url }}" alt="Foto da galeria Dermas Beauty" /></div>
+      {% empty %}
+      <div class="gallery-item reveal"><img src="{% static 'core/img/galeria/1.svg' %}" alt="Trabalho Dermas Beauty" /></div>
+      <div class="gallery-item reveal"><img src="{% static 'core/img/galeria/2.svg' %}" alt="Atendimento Dermas Beauty" /></div>
+      <div class="gallery-item reveal"><img src="{% static 'core/img/galeria/3.svg' %}" alt="Resultado Dermas Beauty" /></div>
+      {% endfor %}
+    </div>
+    <div style="margin-top: 28px; text-align: center;">
+      <a href="{{ INSTAGRAM_URL }}" target="_blank" rel="noopener noreferrer" class="button button-primary">Conheça nosso Instagram</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends 'core/base.html' %}
+{% block title %}{{ service.name }} | Dermas Beauty{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+  <div class="container page-hero-inner">
+    <div>
+      <p class="eyebrow">{{ service.category }}</p>
+      <h1>{{ service.name }}</h1>
+    </div>
+    <div class="breadcrumbs">Início / Serviços / {{ service.name }}</div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container service-detail-content">
+    {% if service.video or service.image %}
+    <div class="detail-box reveal service-media">
+      {% if service.video %}
+      <video controls preload="metadata"{% if service.image %} poster="{{ service.image.url }}"{% endif %}>
+        <source src="{{ service.video.url }}" type="video/mp4" />
+        Seu navegador não suporta a reprodução de vídeo.
+      </video>
+      {% else %}
+      <img src="{{ service.image.url }}" alt="{{ service.name }}" />
+      {% endif %}
+    </div>
+    {% endif %}
+    <div class="detail-box reveal">
+      <p class="lead">{{ service.description }}</p>
+      {% if service.benefits %}
+      <h3>Benefícios</h3>
+      <p>{{ service.benefits }}</p>
+      {% endif %}
+      <div class="card-actions" style="justify-content: flex-start; gap: 16px;">
+        <a href="{% url 'core:appointment' %}" class="button button-primary">Agendar</a>
+        <a href="{% url 'core:services' %}" class="button button-secondary">Voltar aos serviços</a>
+      </div>
+    </div>
+    <div class="detail-box reveal">
+      <h3>Detalhes do procedimento</h3>
+      <ul class="contact-list">
+        <li><span class="icon">⏱</span><span>Duração: {{ service.duration }}</span></li>
+        <li><span class="icon">✦</span><span>Categoria: {{ service.category }}</span></li>
+        <li><span class="icon">✓</span><span>Atendimento com hora marcada</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+{% endblock %}

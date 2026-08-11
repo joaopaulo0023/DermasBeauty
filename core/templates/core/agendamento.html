@@ -1,0 +1,74 @@
+{% extends 'core/base.html' %}
+{% block title %}Agendamento | Dermas Beauty{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+  <div class="container page-hero-inner">
+    <div>
+      <p class="eyebrow">Agendamento</p>
+      <h1>Agende seu horário.</h1>
+    </div>
+    <div class="breadcrumbs">Início / Agendamento</div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container appointment-grid">
+    <div>
+      <h2 class="section-title">Solicite seu atendimento</h2>
+      <p class="lead">Preencha o formulário abaixo para solicitar um horário. Nossa equipe entrará em contato para confirmar sua agenda.</p>
+      <div class="feature-list">
+        <div class="feature-item"><span class="bullet"></span><span>Atendimento com hora marcada</span></div>
+        <div class="feature-item"><span class="bullet"></span><span>Orientação personalizada</span></div>
+      </div>
+    </div>
+
+    <div class="form-box reveal">
+      <form method="post">
+        {% csrf_token %}
+        <div class="form-grid">
+          {% for field in form %}
+          <div class="form-field {% if field.name in 'message' %}full{% endif %}">
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field }}
+            {% if field.errors %}
+            <small style="color: #a33;">{{ field.errors|join:', ' }}</small>
+            {% endif %}
+          </div>
+          {% endfor %}
+        </div>
+        <div style="margin-top: 24px;">
+          <button type="submit" class="button button-primary">Enviar solicitação</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const dateInput = document.getElementById('id_preferred_date');
+    const timeSelect = document.getElementById('id_preferred_time');
+    if (!dateInput || !timeSelect) return;
+
+    const updateSlots = async () => {
+      if (!dateInput.value) return;
+      timeSelect.innerHTML = '<option value="">Carregando horários...</option>';
+      try {
+        const response = await fetch('{% url "core:appointment_slots" %}?date=' + encodeURIComponent(dateInput.value));
+        const data = await response.json();
+        timeSelect.innerHTML = data.slots.length
+          ? '<option value="">Selecione um horário</option>'
+          : '<option value="">Não há horários disponíveis nesta data</option>';
+        data.slots.forEach((slot) => {
+          const option = new Option(slot, slot);
+          timeSelect.add(option);
+        });
+      } catch (error) {
+        timeSelect.innerHTML = '<option value="">Não foi possível carregar os horários</option>';
+      }
+    };
+
+    dateInput.addEventListener('change', updateSlots);
+  });
+</script>
+{% endblock %}
