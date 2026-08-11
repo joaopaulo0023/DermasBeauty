@@ -20,6 +20,7 @@ fonttools==4.63.0
 frozenlist==1.8.0
 gallery_dl==1.32.9
 graphviz==0.21
+gunicorn==26.0.0
 idna==3.18
 ipython==9.16.1
 ipython_pygments_lexers==1.1.1
