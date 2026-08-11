@@ -1,6 +1,7 @@
 from pathlib import Path
 import os
 from dotenv import load_dotenv
+import dj_database_url
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv(BASE_DIR / '.env')
@@ -56,11 +57,14 @@ TEMPLATES = [
 WSGI_APPLICATION = 'dermas_beauty.wsgi.application'
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': dj_database_url.config(
+        default=os.environ.get('DATABASE_URL')
+    )
 }
+
+
+
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
@@ -91,3 +95,6 @@ EMAIL = os.getenv('EMAIL', 'contato@dermasbeauty.com.br')
 ADDRESS = os.getenv('ADDRESS', 'Taubaté/SP')
 BUSINESS_HOURS = os.getenv('BUSINESS_HOURS', 'Segunda a sábado, das 9h às 19h')
 GOOGLE_MAPS_URL = os.getenv('GOOGLE_MAPS_URL', 'https://www.google.com/maps?q=Taubat%C3%A9%20SP&output=embed')
+
+
+STATIC_ROOT = BASE_DIR / "staticfiles"
