@@ -7,7 +7,9 @@ load_dotenv(BASE_DIR / '.env')
 
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 DEBUG = False
-ALLOWED_HOSTS = ['dermasbeauty.com', 'www.dermasbeauty.com']
+ALLOWED_HOSTS = ['*']
+
+# dermasbeauty.com', 'www.dermasbeauty.com
 
 INSTALLED_APPS = [
     'django.contrib.admin',
