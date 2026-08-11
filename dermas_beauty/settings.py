@@ -7,7 +7,10 @@ load_dotenv(BASE_DIR / '.env')
 
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 DEBUG = False
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = [
+    'dermasbeauty.onrender.com',
+    'localhost',
+    '127.0.0.1']
 
 # dermasbeauty.com', 'www.dermasbeauty.com
 
